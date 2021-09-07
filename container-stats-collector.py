@@ -32,6 +32,8 @@ read_interval_value = os.environ['READ_INTERVAL']
 if read_interval_value is None:
   raise ValueError('Missing read interval')
 read_interval_int = int(read_interval_value)
+if read_interval_int < 1:
+  raise ValueError('Interval must be greater than zero')
 
 client = docker.APIClient(base_url='{0}:2375'.format(docker_ip))
 
