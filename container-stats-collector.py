@@ -17,7 +17,7 @@ def save_stats(client, container_name, read_interval):
           counter = 0
         counter += 1
     finally:
-      file.write(']')
+      file.write('{{}}]')
 
 docker_ip = os.environ['DOCKER_HOST']
 if docker_ip is None:
