@@ -8,7 +8,7 @@ Configure the following environment variables (by modifying the compose file):
 
 * `DOCKER_HOST`: The address of the Docker host, `host.docker.internal` for the own host.
 * `CONTAINER_NAMES`: The names of the containers for which stats will be collected, comma-separated list.
-* `READ_INTERVAL`: The Docker stats API emits one JSON stats info object per container per second. Specifying the interval determines how many of these objects are saved by the application. An interval of 5 would result in every fifth stats object being saved.
+* `SAVE_INTERVAL`: The Docker stats API emits one JSON stats info object per container per second. Specifying the interval determines how many of these objects are saved by the application. An interval of 5 would result in every fifth stats object being saved.
 
 Be aware that the Docker engine HTTP API on the target host must be enabled and available on the default port `2375` for this application to work.
 

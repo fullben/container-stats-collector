@@ -3,7 +3,7 @@ import docker
 import os
 import threading
 
-def save_stats(client, container_name, read_interval):
+def save_stats(client, container_name, save_interval):
   timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
   filename = 'data/stats-{0}-{1}.json'.format(timestamp, container_name)
   container_stats = client.stats(container_name)
@@ -12,7 +12,7 @@ def save_stats(client, container_name, read_interval):
     try:
       counter = 1
       for stat in container_stats:
-        if counter % read_interval == 0:
+        if counter % save_interval == 0:
           file.write(stat.decode('utf-8') + ',')
           counter = 0
         counter += 1
@@ -28,11 +28,11 @@ if container_names_str is None:
   raise ValueError('Missing container names')
 container_names = container_names_str.split(',')
 
-read_interval_value = os.environ['READ_INTERVAL']
-if read_interval_value is None:
-  raise ValueError('Missing read interval')
-read_interval_int = int(read_interval_value)
-if read_interval_int < 1:
+save_interval_value = os.environ['SAVE_INTERVAL']
+if save_interval_value is None:
+  raise ValueError('Missing save interval')
+save_interval_int = int(save_interval_value)
+if save_interval_int < 1:
   raise ValueError('Interval must be greater than zero')
 
 client = docker.APIClient(base_url='{0}:2375'.format(docker_ip))
@@ -40,7 +40,7 @@ client = docker.APIClient(base_url='{0}:2375'.format(docker_ip))
 threads = []
 
 for name in container_names:
-  thread = threading.Thread(target = save_stats, args = (client, name, read_interval_int))
+  thread = threading.Thread(target = save_stats, args = (client, name, save_interval_int))
   thread.start()
   threads.append(thread)
   print("Started thread for container \"{0}\"", name)
