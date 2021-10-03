@@ -7,6 +7,6 @@ services:
     environment:
       DOCKER_HOST: "host.docker.internal" # The address of the docker host
       CONTAINER_NAMES: "cont_name" # The names of the containers to monitor, comma-separated
-      READ_INTERVAL: "5" # Stats are emitted every second, interval determines which are saved (5 -> every fifth is saved)
+      SAVE_INTERVAL: "5" # Stats are emitted every second, interval determines which are saved (5 -> every fifth is saved)
 volumes:
   container_stats:
