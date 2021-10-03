@@ -19,8 +19,8 @@ def save_stats(client, container_name, save_interval):
     finally:
       file.write('{{}}]')
 
-docker_ip = os.environ['DOCKER_HOST']
-if docker_ip is None:
+docker_host_url = os.environ['DOCKER_HOST']
+if docker_host_url is None:
   raise ValueError('Missing docker host address')
 
 container_names_str = os.environ['CONTAINER_NAMES']
@@ -35,7 +35,7 @@ save_interval_int = int(save_interval_value)
 if save_interval_int < 1:
   raise ValueError('Interval must be greater than zero')
 
-client = docker.APIClient(base_url='{0}:2375'.format(docker_ip))
+client = docker.APIClient(base_url='{0}:2375'.format(docker_host_url))
 
 threads = []
 
